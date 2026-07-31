@@ -19,3 +19,9 @@ env/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Cache
+.cache/
+
+# Python cache
+.pytest_cache/
