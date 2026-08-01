@@ -4,20 +4,15 @@ from dotenv import load_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-load_dotenv()
-
-
-client_id = os.getenv("SPOTIFY_CLIENT_ID")
-client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
+from app.core.config import settings
 
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyClientCredentials(
-        client_id=client_id,
-        client_secret=client_secret
+        client_id=settings.SPOTIFY_CLIENT_ID,
+        client_secret=settings.SPOTIFY_CLIENT_SECRET
     )
 )
-
 
 def search_track(title: str, artist: str):
     query = f"track:{title} artist:{artist}"

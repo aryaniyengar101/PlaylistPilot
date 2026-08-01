@@ -5,7 +5,7 @@ from app.schemas.playlist_schema import (
     PlaylistResponse,
 )
 
-from app.services.ai_service import generate_playlist
+from app.services.playlist_service import generate_playlist
 
 router = APIRouter(
     prefix="/playlist",
