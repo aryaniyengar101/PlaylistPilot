@@ -6,10 +6,17 @@ from app.schemas.playlist_schema import (
 
 from app.services.ai_service import get_song_recommendations
 from app.services.spotify_service import search_track
+from app.utils.logger import logger
 
 
 def generate_playlist(data: PlaylistRequest) -> PlaylistResponse:
 
+    # 1️⃣ Playlist generation has started
+    logger.info(
+        f"Generating playlist | Mood={data.mood}, Genre={data.genre}, Activity={data.activity}, Songs={data.num_songs}"
+    )
+
+    # 2️⃣ Calling OpenAI
     recommended_songs = get_song_recommendations(data)
 
     songs = []
@@ -29,6 +36,15 @@ def generate_playlist(data: PlaylistRequest) -> PlaylistResponse:
                     image_url=spotify_data["image_url"],
                 )
             )
+
+        else:
+            # 6️⃣ Song not found
+            logger.warning(f"Spotify couldn't find: {title} - {artist}")
+
+    # 7️⃣ Playlist completed
+    logger.info(
+        f"Playlist generated successfully with {len(songs)} songs."
+    )
 
     return PlaylistResponse(
         playlist_name=f"{data.activity} {data.genre} Mix",
